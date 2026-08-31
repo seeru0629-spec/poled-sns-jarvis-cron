@@ -1,0 +1,15 @@
+name: poled-sns-jarvis scheduled publish
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  run-scheduled-publishes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger scheduled-publish check
+        run: |
+          curl -sf -X POST "https://poled-sns-jarvis.vercel.app/api/cron/run-scheduled-publishes" \
+            -H "Authorization: Bearer ${{ secrets.POLED_SNS_JARVIS_CRON_SECRET }}"
